@@ -1,0 +1,40 @@
+{
+  "name": "battleship-bot",
+  "version": "1.0.0",
+  "description": "Discord bot with battleship game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mustaf115/battleship-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mustaf115/battleship-bot/issues"
+  },
+  "homepage": "https://github.com/mustaf115/battleship-bot#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "lowdb": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.9",
+    "@types/node": "^13.11.1",
+    "gts": "^2.0.2",
+    "jest": "^26.2.2",
+    "ts-jest": "^26.1.4",
+    "typescript": "^3.8.3"
+  }
+}
