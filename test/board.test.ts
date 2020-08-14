@@ -58,6 +58,7 @@ test('should shoot ship into hit and empty into shot', () => {
 test("should throw can't hit error", () => {
   const board = new Board('testOwner');
   const shipCell = board.getCell(3, 3);
+  board.fillInDirection(shipCell, 1, Direction.Right);
   const ignoreCell = board.getCell(4, 3);
   board.shoot(shipCell);
   expect(() => {

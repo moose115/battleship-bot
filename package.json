@@ -25,9 +25,11 @@
   },
   "homepage": "https://github.com/mustaf115/battleship-bot#readme",
   "dependencies": {
+    "canvas": "^2.6.1",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
-    "lowdb": "^1.0.0"
+    "lowdb": "^1.0.0",
+    "pixi.js": "^5.3.3"
   },
   "devDependencies": {
     "@types/jest": "^26.0.9",

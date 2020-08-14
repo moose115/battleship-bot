@@ -14,7 +14,7 @@ export enum Direction {
   Left,
 }
 
-interface Cell {
+export interface Cell {
   x: number;
   y: number;
   status: CellStatus;
@@ -84,13 +84,13 @@ export class Board {
     const modifiedCells = [];
     while (howMany > 0) {
       if (dir === Direction.Up || dir === Direction.Down) {
-        const cell = this.getCell(startCell.x, y);
+        const cell = this.getCell(x, y);
         this.setCellShip(cell);
         if (dir === Direction.Down) y++;
         else y--;
         modifiedCells.push(cell);
       } else {
-        const cell = this.getCell(x, startCell.y);
+        const cell = this.getCell(x, y);
         this.setCellShip(cell);
         if (dir === Direction.Right) x++;
         else x--;
@@ -98,6 +98,8 @@ export class Board {
       }
       howMany--;
     }
+    for (const modified of modifiedCells)
+      this.setAdjecentCellsProtected(modified);
   };
 
   setCellShot = (cell: Cell) => {
@@ -107,9 +109,8 @@ export class Board {
   setCellHit = (cell: Cell) => {
     cell.status = CellStatus.Hit;
     if (this.isShipDestroyed(cell)) {
-      this.getAdjecentCells(cell).forEach(el => {
-        el.status = CellStatus.Ignore;
-      });
+      for (const adjecent of this.getAdjecentCells(cell))
+        adjecent.status = CellStatus.Ignore;
     }
   };
 
@@ -125,11 +126,12 @@ export class Board {
 
   isShipDestroyed = (cell: Cell) => {
     let isDestroyed = true;
+    console.log(this.getAdjecentCells(cell));
     for (const adjecent of this.getAdjecentCells(cell)) {
-      console.log(adjecent.status);
       if (
-        adjecent.status !== CellStatus.Protected &&
-        adjecent.status !== CellStatus.Hit
+        adjecent.status !== CellStatus.Ignore &&
+        adjecent.status !== CellStatus.Hit &&
+        adjecent.status !== CellStatus.Protected
       )
         isDestroyed = false;
     }
