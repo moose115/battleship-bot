@@ -1,10 +1,11 @@
 import * as Canvas from 'canvas';
 import {Cell, CellStatus} from './board';
 
-const imgSize = 260;
+const gridSize = 10;
 const gridCellSize = 22;
 const gridOffset = 20;
-const labelSize = 12;
+const imgSize = 2 * gridOffset + gridSize * gridCellSize;
+const labelSize = gridOffset * 0.75;
 
 export const draw = (board: Cell[]): Buffer => {
   const canvas = Canvas.createCanvas(imgSize, imgSize);
@@ -14,8 +15,8 @@ export const draw = (board: Cell[]): Buffer => {
   ctx.lineWidth = 1;
 
   board.forEach((cell, i) => {
-    const rectStartX = (i % 10) * gridCellSize + gridOffset;
-    const rectStartY = Math.floor((i + 1) / 10) * gridCellSize + gridOffset;
+    const rectStartX = (i % gridSize) * gridCellSize + gridOffset;
+    const rectStartY = Math.floor(i / gridSize) * gridCellSize + gridOffset;
 
     switch (cell.status) {
       case CellStatus.Empty:
@@ -37,6 +38,8 @@ export const draw = (board: Cell[]): Buffer => {
       default:
         ctx.fillStyle = 'rgb(256, 256, 256)';
     }
+    ctx.strokeStyle = '#333333';
+    ctx.strokeRect(rectStartX, rectStartY, gridCellSize, gridCellSize);
     ctx.fillRect(rectStartX, rectStartY, gridCellSize, gridCellSize);
   });
 
@@ -46,10 +49,19 @@ export const draw = (board: Cell[]): Buffer => {
   ctx.fillStyle = '#ffffff';
 
   labelsH.forEach((labelH, i) => {
-    const {width} = ctx.measureText(labelH);
-    const posX = i * gridCellSize + gridOffset + width / 2;
-    ctx.fillText(labelH, posX, labelSize);
-    ctx.fillText(labelH, posX, imgSize - gridOffset / 2);
+    const posX = i * gridCellSize + gridOffset + labelSize / 3;
+    ctx.fillText(labelH, posX, gridOffset * 0.75); // upper
+    ctx.fillText(
+      labelH,
+      posX,
+      (gridSize + 1) * gridCellSize + gridOffset * 0.75
+    ); // bottom
+  });
+
+  labelsV.forEach((labelV, i) => {
+    const posY = (i + 1) * gridCellSize + gridOffset * 0.75;
+    ctx.fillText(labelV, labelSize / 2, posY); // left
+    ctx.fillText(labelV, (gridSize + 1) * gridCellSize, posY); // right
   });
 
   const buffer = canvas.toBuffer('image/png');
