@@ -137,4 +137,8 @@ export class Board {
     }
     return isDestroyed;
   };
+
+  isCleared = () => {
+    return this.body.every(cell => cell.status !== CellStatus.Ship);
+  };
 }

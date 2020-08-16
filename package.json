@@ -29,6 +29,7 @@
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "lowdb": "^1.0.0",
+    "memory-cache": "^0.2.0",
     "pixi.js": "^5.3.3"
   },
   "devDependencies": {

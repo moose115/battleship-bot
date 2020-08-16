@@ -69,3 +69,10 @@ test("should throw can't hit error", () => {
     board.shoot(ignoreCell);
   }).toThrow();
 });
+
+test('should return if board is cleared', () => {
+  const board = new Board('testOwner');
+  expect(board.isCleared()).toBe(true);
+  board.fillInDirection(board.getCell(3, 3), 3, Direction.Right);
+  expect(board.isCleared()).toBe(false);
+});
