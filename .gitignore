@@ -103,5 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
-# Typescript uild dir
+# Typescript build dir
 build
+
+# Image generation
+test/*.png
